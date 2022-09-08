@@ -3,8 +3,10 @@ package com.example.pfeesprit.services;
 import java.util.List;
 
 import com.example.pfeesprit.entities.Groupe;
+import com.example.pfeesprit.entities.Role;
 import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.repositories.GroupRepository;
+import com.example.pfeesprit.repositories.IRoleRepository;
 import com.example.pfeesprit.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,8 @@ public class UserService implements IUserservice {
 	UserRepository userRepository;
 	@Autowired
 	GroupRepository groupRepository;
-
+	@Autowired
+	IRoleRepository roleRepository;
 	@Override
 	public List<User> getAllUsers() {
 		return (List<User>) userRepository.findAll();
@@ -77,6 +80,7 @@ public class UserService implements IUserservice {
 	
 	@Override
 	public User findUserBylogin (String user) throws Exception {
+
 		return userRepository.findBylogin(user);
 	}
 	
@@ -176,10 +180,26 @@ public class UserService implements IUserservice {
 	}
 
 	@Override
-	public User affectGroup(Integer userId, Long groupId) {
-		User u = userRepository.findByidUser(userId);
-		u.setGroup(groupRepository.getById(groupId));
-		return userRepository.save(u);
+	public void affectGroup(Groupe groupe, int userId) {
+		userRepository.affectUserToGroup(groupe, userId);
 	}
+
+	@Override
+	public void deleteUserFromGroup(int userId) {
+		userRepository.deleteUserFromGroup(userId);
+	}
+
+	@Override
+	public List<User> findByRoleId(int RoleId) {
+		Role r = roleRepository.findById(RoleId).get();
+		return userRepository.findByRole(r);
+	}
+
+	/*@Override
+	public User affectRole(Integer userId, int RoleId) {
+		User u = userRepository.findByidUser(userId);
+		u.setRole(roleRepository.getById(RoleId));
+		return userRepository.save(u);
+	}*/
 
 }

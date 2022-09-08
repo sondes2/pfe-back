@@ -57,6 +57,30 @@ public class User implements Serializable {
 	@JoinColumn(name = "id")
 	private Groupe groupe;
 
+	public User(int idUser, String firstName, String lastName, int telNum, Date birthdate, String address, String mail, String login, String password, boolean accountNonLocked, int failedAttempt, Date lockTime, boolean valid, Role role, String stripeid, String resettoken, Groupe groupe) {
+		this.idUser = idUser;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.telNum = telNum;
+		this.birthdate = birthdate;
+		this.address = address;
+		this.mail = mail;
+		this.login = login;
+		this.password = password;
+		this.accountNonLocked = accountNonLocked;
+		this.failedAttempt = failedAttempt;
+		this.lockTime = lockTime;
+		this.valid = valid;
+		this.role = role;
+		this.stripeid = stripeid;
+		this.resettoken = resettoken;
+		this.groupe = groupe;
+	}
+
+	public void setRole(Role role) {
+            this.role = role;
+        }
+
 	public void setMail(String mail) {
 		this.mail = mail;
 	}

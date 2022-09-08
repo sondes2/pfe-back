@@ -3,8 +3,12 @@ package com.example.pfeesprit.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.Role;
+import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.repositories.IRoleRepository;
+import com.example.pfeesprit.repositories.RoleRepository;
+import com.example.pfeesprit.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,8 @@ public class RoleService implements IRoleservice {
 	@Autowired
 	IRoleRepository roleRepository;
 
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public List<Role> getAllRoles() {
@@ -36,10 +42,10 @@ public class RoleService implements IRoleservice {
 		}
 	}
 
-	@Override
+/*	@Override
 	public Role findRoleByroleType(String role) throws Exception {
 		return roleRepository.findRoleByroleType(role);
-	}
+	}*/
 
 
 	@Override
@@ -51,5 +57,10 @@ public class RoleService implements IRoleservice {
 	public void deleteRoleById(int roleId) throws Exception {
 		roleRepository.deleteById(roleId);
 	}
-	
+	/*@Override
+	public void affectRole(List<User> users, int RoleId)  {
+		Role r= roleRepository.findById(RoleId).get();
+		users.forEach(user -> user.setRole(r));
+		userRepository.saveAll(users);
+	}*/
 }

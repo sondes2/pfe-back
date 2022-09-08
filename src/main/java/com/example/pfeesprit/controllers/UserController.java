@@ -2,22 +2,15 @@ package com.example.pfeesprit.controllers;
 
 import java.util.List;
 
+import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.services.IUserservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.PUT;
 
 @CrossOrigin(origins ="*",allowedHeaders="*")
 @RestController
@@ -105,6 +98,18 @@ public class UserController {
 	@GetMapping("/findActivatedUser/")
 	public List<String> findUserActivated() throws Exception {
 		return iuserservice.findUsersActivated();
+	}
+
+	@PutMapping("/affectGroup/{userId}")
+	public String affectGroupe(@RequestBody Groupe groupe, @PathVariable int userId) {
+		iuserservice.affectGroup(groupe, userId);
+		return "success";
+	}
+
+	@PutMapping("/deleteGroup/{userId}")
+	public String deleteUserFromGroup(@PathVariable int userId) {
+		iuserservice.deleteUserFromGroup(userId);
+		return "success";
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")

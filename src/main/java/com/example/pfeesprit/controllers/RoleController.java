@@ -3,6 +3,7 @@ package com.example.pfeesprit.controllers;
 import java.util.List;
 
 import com.example.pfeesprit.entities.Role;
+import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.services.IRoleservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class RoleController {
 	IRoleservice iroleservice;
 
 	@JsonBackReference("")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "*")
 	@GetMapping("/Role/findall")
 	public List<Role> getAllUsers() {
 		return iroleservice.getAllRoles();
@@ -44,4 +45,8 @@ public class RoleController {
 	public void deleteRoleById(@PathVariable("roleId") int roleId) throws Exception {
 		iroleservice.deleteRoleById(roleId);
 	}
+	/*@PutMapping("affectUsers/{groupId}")
+	public void affectRole(@RequestBody List<User> users, @PathVariable int groupId) {
+		iroleservice.affectRole(users,roleId );
+	}*/
 }

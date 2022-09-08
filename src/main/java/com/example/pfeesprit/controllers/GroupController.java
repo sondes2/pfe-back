@@ -50,9 +50,4 @@ public class GroupController {
         iGroupservice.deletegroup(groupId);
     }
 
-    @PutMapping("affectUsers/{groupId}")
-    public void affectUsers(@RequestBody List<User> users, @PathVariable Long groupId) {
-         iGroupservice.affectUsers(users, groupId);
-    }
-
 }

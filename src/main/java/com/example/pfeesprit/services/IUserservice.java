@@ -1,6 +1,7 @@
 package com.example.pfeesprit.services;
 import java.util.List;
 
+import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.User;
 //import esprit.pidev.entities.User;
 
@@ -24,8 +25,10 @@ public interface IUserservice {
 	void resetFailedAttempts(String mail);
 	public User findUserByResetToken(String token);
 	List<User> findByGroupId(Long groupId);
-	public User affectGroup(Integer userId, Long groupId );
-
+	public void affectGroup(Groupe groupe, int userId);
+	public void deleteUserFromGroup(int userId);
+	//public User affectRole(Integer userId, int RoleId);
+	public List<User> findByRoleId(int RoleId);
 	void lock(User user);
 
 	User findById(int id);

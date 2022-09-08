@@ -41,11 +41,4 @@ public class GroupServiceImpl implements IGroupService{
     public Groupe findById(Long id) {
         return groupRepository.findById(id).get();
     }
-
-    @Override
-    public void affectUsers(List<User> users, Long groupId) {
-        Groupe g = groupRepository.findById(groupId).get();
-        users.forEach(user -> user.setGroup(g));
-        userRepository.saveAll(users);
-    }
 }
