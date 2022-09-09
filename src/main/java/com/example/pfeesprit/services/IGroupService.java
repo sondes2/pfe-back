@@ -1,7 +1,6 @@
 package com.example.pfeesprit.services;
 
 import com.example.pfeesprit.entities.Groupe;
-import com.example.pfeesprit.entities.User;
 
 import java.util.List;
 

@@ -50,5 +50,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserByresettoken(String login);
 
+    @Query("SELECT u FROM User u INNER JOIN Groupe g on (u.groupe.id = g.id)where  u.idUser=?1")
+    List<User> findUsersOfSameGroupByUserId(int userId);
+
 
 }

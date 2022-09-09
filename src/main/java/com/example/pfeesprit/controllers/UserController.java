@@ -29,8 +29,13 @@ public class UserController {
 	@GetMapping("/findall")
 	public List<User> getAllUsers() {
 		return iuserservice.getAllUsers();
-
 	}
+
+	@GetMapping("/findUsersOfSameGroupByUserId/{idUser}")
+	public List<User> findUsersOfSameGroupByUserId(int idUser) {
+		return iuserservice.getAllUsers();
+	}
+
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping("/userbyid/{idUser}")
 	public User getUserById(@PathVariable("idUser") int idUser) throws Exception {

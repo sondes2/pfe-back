@@ -1,7 +1,6 @@
 package com.example.pfeesprit.services;
 
 import com.example.pfeesprit.entities.Groupe;
-import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.repositories.GroupRepository;
 import com.example.pfeesprit.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

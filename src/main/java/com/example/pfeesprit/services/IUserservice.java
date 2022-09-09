@@ -37,4 +37,6 @@ public interface IUserservice {
 
 	List<User> findAllByOrderByIdAsc();
 
+	List<User> findUsersOfSameGroupByUserId(int userId);
+
 }

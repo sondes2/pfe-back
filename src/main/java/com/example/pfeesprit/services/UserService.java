@@ -164,6 +164,10 @@ public class UserService implements IUserservice {
 		return null;
 	}
 
+	@Override
+	public List<User> findUsersOfSameGroupByUserId(int userId) {
+		return this.findUsersOfSameGroupByUserId(userId);
+	}
 
 
 	@Override

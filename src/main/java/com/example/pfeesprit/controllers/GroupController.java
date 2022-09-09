@@ -30,6 +30,11 @@ public class GroupController {
         return iGroupservice.findById(idGroup);
     }
 
+    @GetMapping("/GroupbyUserId/{idUser}")
+    public List<Groupe> getGroupByUserId(@PathVariable int idUser) {
+        return iGroupservice.findByUserId(idUser);
+    }
+
     @PostMapping("/AddGroup")
     // @ResponseBody
     public Groupe addGroup(@RequestBody Groupe groupe) {

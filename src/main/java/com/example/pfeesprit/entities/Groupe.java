@@ -1,8 +1,6 @@
 package com.example.pfeesprit.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,7 +30,6 @@ public class Groupe implements Serializable {
     public void setUser(List<User> user) {
         this.user = user;
     }
-
 
     public void setId(Long id) {
         this.id = id;
