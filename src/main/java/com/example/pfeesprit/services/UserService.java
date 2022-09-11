@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.Role;
+import com.example.pfeesprit.entities.Task;
 import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.repositories.GroupRepository;
 import com.example.pfeesprit.repositories.IRoleRepository;
@@ -41,7 +42,7 @@ public class UserService implements IUserservice {
 	
 
 	@Override
-	public User getUserById(int id) throws Exception {
+	public User getUserById(Long id) throws Exception {
 		return userRepository.findByidUser(id);
 	}
 
@@ -62,7 +63,7 @@ public class UserService implements IUserservice {
 
 	
 	@Override
-	public void deleteUserById(Integer userId) throws Exception {
+	public void deleteUserById(Long userId) throws Exception {
 		userRepository.deleteById(userId);
 	}
 	
@@ -89,7 +90,7 @@ public class UserService implements IUserservice {
 		return userRepository.findBylastName(username);
 	}
 	
-	public String getUserRoleDescription(int id) {
+	public String getUserRoleDescription(Long id) {
 		return userRepository.getUserRoleDescription(id);
 		
 	}
@@ -148,7 +149,7 @@ public class UserService implements IUserservice {
 	
 	//dhekra
 	@Override
-	public User findById(int id) {
+	public User findById(Long id) {
 		return userRepository.findById(id).get();
 	}
 
@@ -180,12 +181,12 @@ public class UserService implements IUserservice {
 	}
 
 	@Override
-	public void affectGroup(Groupe groupe, int userId) {
+	public void affectGroup(Groupe groupe, Long userId) {
 		userRepository.affectUserToGroup(groupe, userId);
 	}
 
 	@Override
-	public void deleteUserFromGroup(int userId) {
+	public void deleteUserFromGroup(Long userId) {
 		userRepository.deleteUserFromGroup(userId);
 	}
 
@@ -194,6 +195,12 @@ public class UserService implements IUserservice {
 		Role r = roleRepository.findById(RoleId).get();
 		return userRepository.findByRole(r);
 	}
+
+	@Override
+	public List<User> findUsersOfSameGroupByUserId(String login) {
+		return userRepository.findUsersOfSameGroupByUserId(login);
+	}
+
 
 	/*@Override
 	public User affectRole(Integer userId, int RoleId) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.Role;
+import com.example.pfeesprit.entities.Task;
 import com.example.pfeesprit.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     User findBylogin(String userName);
 
     List<User> findBylastName(String userName);
@@ -23,20 +24,20 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByRole(Role role);
 
-    User findByidUser(int idUser);
+    User findByidUser(Long idUser);
 
     @Query("SELECT r.roleType FROM User u INNER JOIN Role r on (u.role.idRole = r.idRole) where  u.idUser =:id")
-    public String getUserRoleDescription(@Param("id") int id);
+    public String getUserRoleDescription(@Param("id") Long id);
 
     @Query("UPDATE User u SET u.groupe = ?1 WHERE u.idUser = ?2")
     @Modifying
     @Transactional
-    public void affectUserToGroup(Groupe groupe, int idUser);
+    public void affectUserToGroup(Groupe groupe, Long idUser);
 
     @Query("UPDATE User u SET u.groupe = null WHERE u.idUser = ?1")
     @Modifying
     @Transactional
-    public void deleteUserFromGroup(int idUser);
+    public void deleteUserFromGroup(Long idUser);
 
     @Query("SELECT CONCAT(u.firstName,CONCAT(' ',u.lastName)) FROM User u where  u.valid =TRUE")
     public List<String> getUsersFromActivated();
@@ -50,5 +51,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserByresettoken(String login);
 
+    @Query("SELECT COUNT(u) FROM User u")
+    Long countUsers();
+
+
+    /*@Query("SELECT u FROM User u JOIN Groupe g on (u.groupe.id = g.id) ")
+    List<User> findUsersOfSameGroupByUserId();*/
+
+    @Query("select u from User u join Groupe g on (u.groupe.id = g.id) where g.id in (select u.groupe.id from User u where u.login = ?1)")
+    List<User> findUsersOfSameGroupByUserId(String login);
 
 }

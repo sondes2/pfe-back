@@ -2,18 +2,9 @@ package com.example.pfeesprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +21,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id_user")
-	private int idUser;
+	private Long idUser;
 	private String firstName;
 	private String lastName;
 	private int telNum;
@@ -56,8 +47,19 @@ public class User implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	private Groupe groupe;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Task> task;
 
-	public User(int idUser, String firstName, String lastName, int telNum, Date birthdate, String address, String mail, String login, String password, boolean accountNonLocked, int failedAttempt, Date lockTime, boolean valid, Role role, String stripeid, String resettoken, Groupe groupe) {
+	public List<Task> getTask() {
+		return task;
+	}
+
+	public void setTask(List<Task> task) {
+		this.task = task;
+	}
+
+	public User(Long idUser, String firstName, String lastName, int telNum, Date birthdate, String address, String mail, String login, String password, boolean accountNonLocked, int failedAttempt, Date lockTime, boolean valid, Role role, String stripeid, String resettoken, Groupe groupe, List<Task> task) {
 		this.idUser = idUser;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -75,6 +77,7 @@ public class User implements Serializable {
 		this.stripeid = stripeid;
 		this.resettoken = resettoken;
 		this.groupe = groupe;
+		this.task = task;
 	}
 
 	public void setRole(Role role) {
@@ -107,11 +110,11 @@ public class User implements Serializable {
 		this.resettoken = resettoken;
 	}
 
-	public int getIdUser() {
+	public Long getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(int idUser) {
+	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}
 

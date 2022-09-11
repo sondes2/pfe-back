@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.User;
+import com.example.pfeesprit.repositories.UserRepository;
 import com.example.pfeesprit.services.IUserservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.PUT;
@@ -24,7 +26,8 @@ public class UserController {
 	@Autowired
 	PasswordEncoder encoder;
 
-
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping("/findall")
 	public List<User> getAllUsers() {
@@ -33,7 +36,7 @@ public class UserController {
 	}
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping("/userbyid/{idUser}")
-	public User getUserById(@PathVariable("idUser") int idUser) throws Exception {
+	public User getUserById(@PathVariable("idUser") Long idUser) throws Exception {
 		return iuserservice.getUserById(idUser);
 	}
 
@@ -53,7 +56,7 @@ public class UserController {
 
 
 	@DeleteMapping("/deleteUserById/{userId}")
-	public void deleteUserById(@PathVariable("userId") Integer userId) throws Exception {
+	public void deleteUserById(@PathVariable("userId") Long userId) throws Exception {
 		iuserservice.deleteUserById(userId);
 	}
 
@@ -90,36 +93,43 @@ public class UserController {
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping("/findUserRole/{IdUser}")
-	public String findUserRole(@PathVariable("IdUser") int IdUser) throws Exception {
+	public String findUserRole(@PathVariable("IdUser") Long IdUser) throws Exception {
 		return iuserservice.getUserRoleDescription(IdUser);
 	}
 
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping("/findActivatedUser/")
+	@GetMapping("/findActivatedUser")
 	public List<String> findUserActivated() throws Exception {
 		return iuserservice.findUsersActivated();
 	}
 
 	@PutMapping("/affectGroup/{userId}")
-	public String affectGroupe(@RequestBody Groupe groupe, @PathVariable int userId) {
+	public String affectGroupe(@RequestBody Groupe groupe, @PathVariable Long userId) {
 		iuserservice.affectGroup(groupe, userId);
 		return "success";
 	}
 
 	@PutMapping("/deleteGroup/{userId}")
-	public String deleteUserFromGroup(@PathVariable int userId) {
+	public String deleteUserFromGroup(@PathVariable Long userId) {
 		iuserservice.deleteUserFromGroup(userId);
 		return "success";
 	}
 
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping("/findDisabledUser/")
+	@GetMapping("/findDisabledUser")
 	public List<String> findUserDisabled() throws Exception {
 		return iuserservice.getUsersFromDisabled();
 	}
 
 
-	
+	@RequestMapping("/Countuser")
+	public Long countUsers(Model model) {
+		model.addAttribute("countUsers", userRepository.countUsers());
+		return userRepository.countUsers();
+	}
+
+	@GetMapping("/findUsersOfSameGroupByUserId/{login}")
+	public List<User> findUsersOfSameGroupByUserId(@PathVariable String login) {
+		return iuserservice.findUsersOfSameGroupByUserId(login);
+	}
 	
 	/*@PostMapping("/sendSMS")
 	public void sendSMS(@RequestBody String messageToSend){
