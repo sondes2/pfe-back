@@ -24,8 +24,6 @@ public class TaskService implements ITaskService {
 
     @Override
     public List<Task> getAllTask() {
-
-
         return taskRepository.findAll();
     }
 
@@ -36,11 +34,23 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task addTask(Task task) {
+        task.setStatustype(StatusTypes.TODO);
         return taskRepository.save(task);
     }
 
     @Override
     public Task editTask(Task task) {
+        switch (task.getStatustype()) {
+            case DOING:
+                task.setStartDate(new Date());
+                break;
+            case DONE:
+                task.setEndDate(new Date());
+                task.setTimeSpent(getDateDiff(task.getStartDate(), task.getEndDate(), TimeUnit.DAYS));
+                break;
+            default:
+                break;
+        }
         return taskRepository.save(task);
     }
 
@@ -48,17 +58,9 @@ public class TaskService implements ITaskService {
     public void deleteTask(Long idTask) {
         taskRepository.deleteById(idTask);
     }
+
     @Override
     public Task findTaskById(Long idTask) {
-        Date startDate = new Date();
-        Date endDate = new Date();
-        Long dateBeforeInMs = startDate.getTime();
-        Long dateAfterInMs = endDate.getTime();
-        Long timeDiff = Math.abs(dateAfterInMs -dateBeforeInMs);
-        Long timeSpent = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
-
-
-
         return taskRepository.findById(idTask).get();
     }
 
@@ -77,21 +79,16 @@ public class TaskService implements ITaskService {
         return taskRepository.CountTaskByStatus();
     }
 
-    @Override
-    public void updateStatus(String statusTypes,Long idTask) {
-        StatusTypes statusTypes1 = StatusTypes.TODO;
-        switch (statusTypes) {
-            case "DONE":
-                statusTypes1 = StatusTypes.DONE;
-                break;
-            case "DOING":
-
-                statusTypes1 = StatusTypes.DOING;
-                break;
-        }
-
-        this.taskRepository.updateStatus(statusTypes1, idTask);
+    /**
+    * Get a diff between two dates
+    * @param date1 the oldest date
+    * @param date2 the newest date
+    * @param timeUnit the unit in which you want the diff
+    * @return the diff value, in the provided unit
+    */
+    private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
-
 
 }

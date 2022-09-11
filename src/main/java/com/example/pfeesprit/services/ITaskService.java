@@ -20,6 +20,5 @@ public interface ITaskService {
     public void affectUsertoTask(User user, Long idTask);
     public void deleteUserFromTask(Long idTask);
     public CountTaskByStatusDTO TaskByStatus();
-    public void updateStatus(String statusTypes, Long idTask);
 
 }
