@@ -32,7 +32,7 @@ public class Role implements Serializable{
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private RoleType roleType;
-	@OneToMany(cascade= CascadeType.ALL, mappedBy="role", fetch= FetchType.EAGER)
+	@OneToMany(cascade= CascadeType.DETACH, mappedBy="role", fetch= FetchType.EAGER)
 	public Set<User> user;
 	
 	public Role() {

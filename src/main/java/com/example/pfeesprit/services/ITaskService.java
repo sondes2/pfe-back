@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ITaskService {
     public List<Task> getAllTask();
-   public List<Task> getTaskbyUser(String login);
+    public List<Task> getTaskbyUser(String login);
 
     Task addTask(Task task);
 
@@ -20,6 +20,5 @@ public interface ITaskService {
     public void affectUsertoTask(User user, Long idTask);
     public void deleteUserFromTask(Long idTask);
     public CountTaskByStatusDTO TaskByStatus();
-    public void updateStatus(String statusTypes, Long idTask);
 
 }

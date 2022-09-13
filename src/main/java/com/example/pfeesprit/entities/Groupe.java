@@ -18,7 +18,7 @@ public class Groupe implements Serializable {
     private Long id;
     private String name;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupe", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "groupe", fetch = FetchType.LAZY)
     public List<User> user;
 
     public Long getId() {

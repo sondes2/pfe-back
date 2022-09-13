@@ -20,11 +20,15 @@ public class Task implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @Temporal(TemporalType.DATE)
-
     private Date endDate;
+    private Long timeSpent;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "id")
+    private User user;
 
+    public Task() {
 
-
+    }
 
     public Task(Long idTask, String description, StatusTypes statustype, Long storypoint, Date startDate, Date endDate, long timeSpent, User user) {
         this.idTask = idTask;
@@ -33,6 +37,7 @@ public class Task implements Serializable {
         this.storypoint = storypoint;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.timeSpent = 0L;
         this.user = user;
     }
 
@@ -42,18 +47,6 @@ public class Task implements Serializable {
 
     public void setStorypoint(Long storypoint) {
         this.storypoint = storypoint;
-    }
-
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private User user;
-
-
-
-
-    public Task() {
-
     }
 
     public Long getIdTask() {
@@ -94,6 +87,14 @@ public class Task implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Long getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(Long timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
     public User getUser() {

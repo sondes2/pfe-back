@@ -81,11 +81,9 @@ public class TaskController {
         return iTaskService.TaskByStatus();
     }
 
-    @PutMapping("/updateStatus/{taskId}/{statusType}")
-    public void updateStatus(@PathVariable String statusType, @PathVariable Long taskId) {
-
-
-        this.iTaskService.updateStatus(statusType, taskId);
+    @PutMapping("/updateStatus")
+    public void updateStatus(@RequestBody Task task) {
+        this.iTaskService.editTask(task);
     }
 
 

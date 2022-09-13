@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.pfeesprit.entities.Groupe;
 import com.example.pfeesprit.entities.Role;
-import com.example.pfeesprit.entities.Task;
 import com.example.pfeesprit.entities.User;
 import com.example.pfeesprit.repositories.GroupRepository;
 import com.example.pfeesprit.repositories.IRoleRepository;
